@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYNC9 - Portal Utama SMAN 9 Surabaya</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icon CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+        }
+        
+        .glass {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-splash {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        /* Splash Screen Keyframes & Animation Classes */
+        @keyframes splashIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.92);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes splashOut {
+            0% {
+                opacity: 1;
+                filter: blur(0px);
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                filter: blur(12px);
+                transform: scale(1.05);
+                pointer-events: none;
+            }
+        }
+
+        .animate-splash-in {
+            animation: splashIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-splash-out {
+            animation: splashOut 0.7s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+        }
+
+        /* Subtle Pulse Effect for Glow Elements */
+        @keyframes floatGlow {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
+        }
+
+        .glow-orb {
+            animation: floatGlow 8s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen relative overflow-x-hidden selection:bg-blue-500 selection:text-white">
+
+    <!-- ==================== SPLASH SCREEN ==================== -->
+    <div id="splashScreen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 transition-all">
+        <!-- Background Glowing Orbs for Splash -->
+        <div class="absolute w-96 h-96 bg-blue-600/30 rounded-full blur-[140px] pointer-events-none glow-orb"></div>
+        <div class="absolute w-80 h-80 bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none glow-orb" style="animation-delay: -4s;"></div>
+
+        <!-- Splash Content Box -->
+        <div id="splashBox" class="glass-splash max-w-md w-full p-8 md:p-10 rounded-3xl text-center relative z-10 shadow-2xl shadow-blue-950/50 flex flex-col items-center animate-splash-in">
+            
+            <!-- Logo / Emblem Badge -->
+            <div class="relative mb-6">
+                <div class="absolute -inset-2 bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 rounded-2xl blur-lg opacity-60 animate-pulse"></div>
+                <div class="relative w-20 h-20 rounded-2xl bg-slate-900 border border-slate-700/80 flex items-center justify-center text-3xl text-blue-400 shadow-inner">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+            </div>
+
+            <!-- Title & Tagline -->
+            <span class="px-3 py-1 rounded-full text-[11px] font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30 mb-3 tracking-wide uppercase">
+                SMA Negeri 9 Surabaya
+            </span>
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight bg-gradient-to-r from-white via-slate-100 to-blue-400 bg-clip-text text-transparent mb-2">
+                SYNC<span class="text-blue-500">9</span>
+            </h1>
+            <p class="text-xs md:text-sm font-medium text-slate-400 tracking-wide mb-8">
+                Terhubung, Terintegrasi, Terkendali
+            </p>
+
+            <!-- Loading Progress Bar -->
+            <div class="w-full bg-slate-800/80 h-1.5 rounded-full overflow-hidden mb-6 relative">
+                <div id="splashProgress" class="h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-500 w-0 transition-all duration-[2500ms] ease-out"></div>
+            </div>
+
+            <!-- Skip Button -->
+            <button onclick="dismissSplash()" class="text-xs text-slate-400 hover:text-slate-200 transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800/40 hover:bg-slate-800/80 border border-slate-700/50">
+                <span>Lewati</span>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- ==================== MAIN PORTAL CONTENT ==================== -->
+    <div id="mainContent" class="opacity-0 transition-opacity duration-700">
+        
+        <!-- Background Ambient Lights -->
+        <div class="fixed -top-40 -left-40 w-96 h-96 bg-blue-600/20 rounded-full blur-[128px] pointer-events-none"></div>
+        <div class="fixed top-1/3 -right-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-[128px] pointer-events-none"></div>
+        <div class="fixed -bottom-40 left-1/3 w-96 h-96 bg-emerald-600/15 rounded-full blur-[128px] pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto px-4 py-8 relative z-10">
+
+            <!-- Header / Branding -->
+            <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4 border-b border-slate-800/80 pb-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center text-xl shadow-lg shadow-blue-500/20 border border-blue-400/30">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-0.5">
+                            <span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30 uppercase tracking-wider">Gateway System</span>
+                            <span class="text-xs text-slate-400">SMAN 9 Surabaya</span>
+                        </div>
+                        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">
+                            SYNC<span class="text-blue-500">9</span> Gateway
+                        </h1>
+                    </div>
+                </div>
+                
+                <!-- Live Time Widget -->
+                <div class="glass px-4 py-2.5 rounded-2xl flex items-center gap-3 shadow-xl">
+                    <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-sm">
+                        <i class="fa-regular fa-clock"></i>
+                    </div>
+                    <div>
+                        <div id="clock" class="text-sm font-bold tracking-wider text-slate-100">00:00:00</div>
+                        <div id="date" class="text-[10px] text-slate-400">Memuat tanggal...</div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Universal Search Bar -->
+            <div class="relative max-w-xl mx-auto mb-10">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <input type="text" id="searchInput" onkeyup="filterApps()" placeholder="Cari e-Learning, si-Pena, Sinergi..." 
+                    class="w-full pl-11 pr-4 py-3.5 bg-slate-900/90 border border-slate-800 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/60 focus:border-transparent text-sm text-slate-100 placeholder-slate-500 shadow-xl transition-all duration-200">
+            </div>
+
+            <!-- 1. Digitalisasi Pembelajaran & Asesmen -->
+            <section class="mb-10 app-section">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xs font-bold text-blue-400 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-graduation-cap"></i> Academic & Learning
+                    </h2>
+                    <span class="text-[11px] text-slate-500">3 Layanan</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <!-- e-Learning -->
+                    <a href="#" target="_blank" class="app-card group p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10 flex flex-col justify-between">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center text-lg group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                                <i class="fa-solid fa-laptop-code"></i>
+                            </div>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Aktif</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-slate-100 group-hover:text-blue-400 transition-colors text-sm app-name">e-Learning</h3>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-600 group-hover:text-blue-400 transition-colors"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 line-clamp-2">LMS untuk proses pembelajaran digital, materi, dan tugas harian.</p>
+                        </div>
+                    </a>
+
+                    <!-- si-Mapan -->
+                    <a href="#" target="_blank" class="app-card group p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/50 hover:bg-slate-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/10 flex flex-col justify-between">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg group-hover:scale-110 group-hover:bg-cyan-500 group-hover:text-white transition-all duration-300">
+                                <i class="fa-solid fa-diagram-project"></i>
+                            </div>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Aktif</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-slate-100 group-hover:text-cyan-400 transition-colors text-sm app-name">si-Mapan</h3>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-600 group-hover:text-cyan-400 transition-colors"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 line-clamp-2">Penjurusan & pemetaan mata pelajaran pilihan kelas 10 ke 11 (Kurnas).</p>
+                        </div>
+                    </a>
+
+                    <!-- si-Meli -->
+                    <a href="#" target="_blank" class="app-card group p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-teal-500/50 hover:bg-slate-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-teal-500/10 flex flex-col justify-between">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-400 flex items-center justify-center text-lg group-hover:scale-110 group-hover:bg-teal-500 group-hover:text-white transition-all duration-300">
+                                <i class="fa-solid fa-award"></i>
+                            </div>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Aktif</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-slate-100 group-hover:text-teal-400 transition-colors text-sm app-name">si-Meli</h3>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-600 group-hover:text-teal-400 transition-colors"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 line-clamp-2">Penentuan & pemetaan siswa eligible SNBP berbasis data nilai.</p>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+
+            <!-- 2. Pengawasan & Mutu Pendidik -->
+            <section class="mb-10 app-section">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xs font-bold text-purple-400 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-chalkboard-user"></i> Teacher Supervision & Quality
+                    </h2>
+                    <span class="text-[11px] text-slate-500">3 Layanan</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    
+                    <!-- e-Jurnal -->
+                    <a href="#" target="_blank" class="app-card group p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-purple-500/50 hover:bg-slate-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-500/10 flex flex-col justify-between">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center text-lg group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300">
+                                <i class="fa-solid fa-book-open-reader"></i>
+                            </div>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">Khusus Guru</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-slate-100 group-hover:text-purple-400 transition-colors text-sm app-name">e-Jurnal</h3>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-600 group-hover:text-purple-400 transition-colors"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 line-clamp-2">Jurnal KBM digital pemantauan kehadiran dan ketertiban guru di kelas.</p>
+                        </div>
+                    </a>
+
+                    <!-- e-Supervisi -->
+                    <a href="#" target="_blank" class="app-card group p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/50 hover:bg-slate-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/10 flex flex-col justify-between">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-lg group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                            </div>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">Khusus Guru</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-slate-100 group-hover:text-indigo-400 transition-colors text-sm app-name">e-Supervisi</h3>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-600 group-hover:text-indigo-400 transition-colors"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 line-clamp-2">Pemantauan & penilaian supervisi akademik guru secara transparan.</p>
+                        </div>
+                    </a>
+
+                    <!-- e-Arsip -->
+                    <a href="#" target="_blank" class="app-card group p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-violet-500/50 hover:bg-slate-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-violet-500/10 flex flex-col justify-between">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-400 flex items-center justify-center text-lg group-hover:scale-110 group-hover:bg-violet-500 group-hover:text-white transition-all duration-300">
+                                <i class="fa-solid fa-box-archive"></i>
+                            </div>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">Internal Staf</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-slate-100 group-hover:text-violet-400 transition-colors text-sm app-name">e-Arsip</h3>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-600 group-hover:text-violet-400 transition-colors"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 line-clamp-2">Digitalisasi perangkat pembelajaran guru dan arsip dokumen staf.</p>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+
+            <!-- 3. Kedisiplinan & Layanan Operasional -->
+            <section class="mb-10 app-section">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-sliders"></i> Operational & Governance
+                    </h2>
+                    <span class="text-[11px] text-slate-500">2 Layanan</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <!-- si-Pena -->
+                    <a href="#" target="_blank" class="app-card group p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-emerald-500/50 hover:bg-slate-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-500/10 flex flex-col justify-between">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">GPS Geotag</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-slate-100 group-hover:text-emerald-400 transition-colors text-sm app-name">si-Pena</h3>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-600 group-hover:text-emerald-400 transition-colors"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 line-clamp-2">Presensi siswa/pegawai berbasis smartphone dengan fitur geotag lock.</p>
+                        </div>
+                    </a>
+
+                    <!-- Safe9 -->
+                    <a href="#" target="_blank" class="app-card group p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-green-500/50 hover:bg-slate-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-green-500/10 flex flex-col justify-between">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400 flex items-center justify-center text-lg group-hover:scale-110 group-hover:bg-green-500 group-hover:text-white transition-all duration-300">
+                                <i class="fa-solid fa-building-circle-check"></i>
+                            </div>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Fasilitas</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-slate-100 group-hover:text-green-400 transition-colors text-sm app-name">Safe9</h3>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-600 group-hover:text-green-400 transition-colors"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 line-clamp-2">Sistem peminjaman dan pengelolaan sarana-prasarana sekolah.</p>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+
+            <!-- 4. Iklim & Keamanan Sekolah -->
+            <section class="mb-10 app-section">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xs font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved"></i> School Climate & Student Wellbeing
+                    </h2>
+                    <span class="text-[11px] text-slate-500">1 Layanan</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    
+                    <!-- Sinergi -->
+                    <a href="#" target="_blank" class="app-card group p-4 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-rose-500/50 hover:bg-slate-900/90 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-rose-500/10 flex flex-col justify-between">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-11 h-11 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 flex items-center justify-center text-lg group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all duration-300">
+                                <i class="fa-solid fa-user-shield"></i>
+                            </div>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-medium bg-rose-500/10 text-rose-400 border border-rose-500/20">100% Anonim</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="font-bold text-slate-100 group-hover:text-rose-400 transition-colors text-sm app-name">Sinergi</h3>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-600 group-hover:text-rose-400 transition-colors"></i>
+                            </div>
+                            <p class="text-xs text-slate-400 line-clamp-2">Kanal pengaduan/aspirasi siswa yang menjamin kerahasiaan (whistleblowing).</p>
+                        </div>
+                    </a>
+
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="mt-16 text-center text-xs text-slate-600 border-t border-slate-800/80 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+                <p>&copy; 2026 SMAN 9 Surabaya &bull; SYNC9 Gateway System</p>
+                <div class="flex items-center gap-4 text-slate-500">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle text-[8px] text-emerald-500"></i> Server Normal</span>
+                    <span>v2.4.0</span>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
+
+    <!-- ==================== LOGIC & SCRIPT ==================== -->
+    <script>
+        let splashDismissed = false;
+
+        // Start Splash Screen Loading Bar on Load
+        window.onload = function() {
+            const progressBar = document.getElementById('splashProgress');
+            if (progressBar) {
+                progressBar.style.width = '100%';
+            }
+
+            // Automatic dismiss after ~2.7s
+            setTimeout(() => {
+                dismissSplash();
+            }, 2700);
+        };
+
+        // Function to Hide Splash Screen smoothly & Show Portal
+        function dismissSplash() {
+            if (splashDismissed) return;
+            splashDismissed = true;
+
+            const splash = document.getElementById('splashScreen');
+            const splashBox = document.getElementById('splashBox');
+            const mainContent = document.getElementById('mainContent');
+
+            if (splashBox) {
+                splashBox.classList.remove('animate-splash-in');
+                splashBox.classList.add('animate-splash-out');
+            }
+
+            setTimeout(() => {
+                if (splash) splash.style.display = 'none';
+                if (mainContent) {
+                    mainContent.classList.remove('opacity-0');
+                    mainContent.classList.add('opacity-100');
+                }
+            }, 600);
+        }
+
+        // Live Clock & Date Widget
+        function updateClock() {
+            const now = new Date();
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const dateOptions = { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' };
+            
+            const clockEl = document.getElementById('clock');
+            const dateEl = document.getElementById('date');
+
+            if (clockEl) clockEl.innerText = now.toLocaleTimeString('id-ID', timeOptions);
+            if (dateEl) dateEl.innerText = now.toLocaleDateString('id-ID', dateOptions);
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Realtime App Filter Search
+        function filterApps() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.getElementsByClassName('app-card');
+            const sections = document.getElementsByClassName('app-section');
+
+            Array.from(cards).forEach(card => {
+                const title = card.querySelector('.app-name').innerText.toLowerCase();
+                const desc = card.querySelector('p').innerText.toLowerCase();
+                
+                if (title.includes(input) || desc.includes(input)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            // Automatically hide empty sections during filter
+            Array.from(sections).forEach(section => {
+                const visibleCards = section.querySelectorAll('.app-card[style*="display: flex"], .app-card:not([style*="display"])');
+                if (visibleCards.length === 0 && input !== "") {
+                    section.style.display = "none";
+                } else {
+                    section.style.display = "block";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
