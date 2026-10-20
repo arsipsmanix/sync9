@@ -13,26 +13,29 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         
-        /* Background Gradasi Vibrant + Abstrak Pattern SVG */
+        /* Background Gradasi Emerald Modern */
         .bg-vibrant-gradient {
-            background: linear-gradient(135deg, #064e3b 0%, #047857 35%, #0f766e 70%, #1e293b 100%);
+            background: linear-gradient(135deg, #064e3b 0%, #047857 40%, #0f766e 75%, #064e3b 100%);
         }
 
-        .bg-abstract-grid {
-            background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px);
-            background-size: 28px 28px;
+        /* Abstract Line Grid Pattern (Tanpa Dots, Nyaman di Mata) */
+        .bg-line-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
 
-        .bg-abstract-waves {
-            background-image: svg-load('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0 50 Q25 20 50 50 T100 50" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/></svg>');
+        .bg-diagonal-mesh {
+            background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.03) 0, rgba(255, 255, 255, 0.03) 2px, transparent 0, transparent 50px);
         }
         
-        /* Kartu Kaca (Glassmorphism Premium) */
+        /* Kartu Glassmorphism */
         .card-glass {
-            background: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.94);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.7);
         }
 
         /* Animasi Progress Bar Splash Screen */
@@ -60,13 +63,10 @@
 
     <!-- SPLASH SCREEN -->
     <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950 px-4">
-        <!-- Glow Orbs Background Splash -->
         <div class="absolute w-80 h-80 bg-emerald-500/20 rounded-full blur-[100px] pointer-events-none"></div>
         <div class="absolute w-80 h-80 bg-teal-500/20 rounded-full blur-[100px] pointer-events-none"></div>
 
         <div class="relative z-10 text-center max-w-sm w-full flex flex-col items-center">
-            
-            <!-- Logo Sekolah dari File Root logo-sma -->
             <div class="relative mb-6">
                 <div class="absolute -inset-2 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-2xl blur-lg opacity-40 animate-pulse"></div>
                 <div class="relative w-28 h-28 p-2 rounded-2xl bg-white border border-slate-200/80 flex items-center justify-center shadow-2xl">
@@ -75,7 +75,6 @@
                 </div>
             </div>
 
-            <!-- Teks Splash Screen -->
             <h1 class="text-3xl font-black tracking-wider text-white mb-1">
                 SYNC<span class="text-emerald-400">9</span>
             </h1>
@@ -83,12 +82,10 @@
                 Terhubung, Terintegrasi, Terkendali
             </p>
 
-            <!-- Loading Indicator & Bar -->
             <div class="w-full bg-slate-800/80 h-1.5 rounded-full overflow-hidden border border-slate-700/50 mb-6">
                 <div class="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-300 h-full animate-progress"></div>
             </div>
 
-            <!-- Tombol Lewati / Skip -->
             <button onclick="dismissSplash()" class="text-xs text-slate-300 hover:text-white bg-slate-900 border border-slate-700 px-4 py-1.5 rounded-full transition-all hover:bg-slate-800 shadow-sm">
                 Lewati <i class="fa-solid fa-arrow-right text-[10px] ml-1"></i>
             </button>
@@ -102,21 +99,19 @@
 
     <!-- HALAMAN UTAMA PORTAL SYNC9 -->
     
-    <!-- Background Abstrak Pattern & Shape -->
-    <div class="absolute inset-0 bg-abstract-grid pointer-events-none"></div>
-    <div class="fixed top-0 left-0 w-full h-full bg-abstract-waves pointer-events-none opacity-30"></div>
+    <!-- Background Abstrak Line Grid & Diagonal Pattern (No Dots) -->
+    <div class="absolute inset-0 bg-line-pattern pointer-events-none"></div>
+    <div class="absolute inset-0 bg-diagonal-mesh pointer-events-none"></div>
 
-    <!-- Geometric Orbs Dekoratif -->
-    <div class="fixed -top-32 -left-32 w-[30rem] h-[30rem] bg-emerald-400/20 rounded-full blur-[100px] pointer-events-none"></div>
-    <div class="fixed top-1/2 -right-32 w-[35rem] h-[35rem] bg-teal-400/20 rounded-full blur-[120px] pointer-events-none"></div>
-    <div class="fixed -bottom-32 left-1/3 w-[30rem] h-[30rem] bg-emerald-600/20 rounded-full blur-[100px] pointer-events-none"></div>
+    <!-- Geometric Light Accents -->
+    <div class="fixed -top-32 -left-32 w-[35rem] h-[35rem] bg-emerald-300/15 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="fixed top-1/2 -right-32 w-[38rem] h-[38rem] bg-teal-300/15 rounded-full blur-[130px] pointer-events-none"></div>
 
     <div id="main-content" class="max-w-6xl mx-auto px-4 py-10 relative z-10">
 
         <!-- Header / Branding -->
         <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4 border-b border-white/20 pb-6 relative">
             <div class="flex items-center gap-4">
-                <!-- Logo Sekolah Header -->
                 <div class="w-14 h-14 rounded-2xl bg-white border border-white/80 p-2 flex items-center justify-center shrink-0 shadow-lg relative">
                     <img src="logo-sma.png" alt="Logo SMAN 9 Surabaya" class="max-w-full max-h-full object-contain relative"
                          onerror="this.onerror=null; this.src='logo-sma.jpg'; this.onerror=function(){this.src='logo-sma.svg';}">
@@ -263,19 +258,29 @@
             </h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 
-                <!-- si-Pena -->
-                <a href="#" target="_blank" class="app-card card-glass group p-6 rounded-2xl hover:bg-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col justify-between">
-                    <div class="flex items-start justify-between mb-5">
-                        <div class="w-12 h-12 rounded-xl bg-emerald-100/80 border border-emerald-200 text-emerald-700 flex items-center justify-center text-xl group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm">
-                            <i class="fa-solid fa-location-dot"></i>
-                        </div>
-                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 border border-blue-200 shrink-0">Akses Siswa</span>
-                    </div>
+                <!-- si-Pena (DENGAN 2 TOMBOL AKSES MANDIRI) -->
+                <div class="app-card card-glass group p-6 rounded-2xl hover:bg-white transition-all duration-300 flex flex-col justify-between border-2 hover:border-emerald-500/50 hover:shadow-2xl">
                     <div>
-                        <h3 class="font-bold text-slate-900 group-hover:text-emerald-700 transition-colors text-base mb-2 app-name">si-Pena</h3>
-                        <p class="text-xs text-slate-600 line-clamp-2 leading-relaxed">Presensi siswa & pegawai berbasis smartphone dengan fitur Geotag Lock.</p>
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-emerald-100/80 border border-emerald-200 text-emerald-700 flex items-center justify-center text-xl shadow-sm">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 border border-emerald-200 shrink-0">Geotag Lock</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base mb-2 app-name">si-Pena</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-6">Presensi sekolah berbasis smartphone dengan integrasi lokasi.</p>
                     </div>
-                </a>
+                    
+                    <!-- 2 Tombol Akses URL si-Pena -->
+                    <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-200/80">
+                        <a href="https://link-presensi-siswa.com" target="_blank" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition-all shadow-md hover:shadow-lg">
+                            <i class="fa-solid fa-user-graduate"></i> Presensi Siswa
+                        </a>
+                        <a href="https://link-presensi-guru.com" target="_blank" class="flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs transition-all shadow-md hover:shadow-lg">
+                            <i class="fa-solid fa-user-tie"></i> Presensi Guru
+                        </a>
+                    </div>
+                </div>
 
                 <!-- Safe9 -->
                 <a href="#" target="_blank" class="app-card card-glass group p-6 rounded-2xl hover:bg-white transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl flex flex-col justify-between">
@@ -331,7 +336,6 @@
 
     <!-- SCRIPT LOGIK -->
     <script>
-        // 1. Pengaturan Splash Screen
         function dismissSplash() {
             const splash = document.getElementById('splash-screen');
             if (splash && !splash.classList.contains('hide')) {
@@ -339,12 +343,10 @@
             }
         }
 
-        // Otomatis tutup splash screen setelah 2.7 detik
         setTimeout(() => {
             dismissSplash();
         }, 2700);
 
-        // 2. Jam & Tanggal Digital Realtime
         function updateClock() {
             const now = new Date();
             const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
@@ -356,7 +358,6 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // 3. Fitur Cari Aplikasi Realtime
         function filterApps() {
             const input = document.getElementById('searchInput').value.toLowerCase();
             const cards = document.getElementsByClassName('app-card');
